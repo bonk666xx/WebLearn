@@ -5,107 +5,152 @@
     box-sizing: border-box;
 }
 
+/* body页面整体设置：渐变背景 + 居中 */
 body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #eef2ff 0%, #f9fafb 100%);
-    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    /* 柔和渐变背景 */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
+    /* 背景固定，防止滚动时渐变错位 */
+    background-attachment: fixed;
 }
 
-/* 名片主体 */
+/* 名片卡片主体 */
 .card-container {
+    width: 340px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    padding: 48px 28px 36px;
+    text-align: center;
     position: relative;
-    width: 360px;
-    padding: 28px 24px 24px;
-    border-radius: 20px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 250, 251, 0.96));
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* 入场动画 */
+    animation: fadeInUp 0.8s ease-out;
+    /* hover过渡 */
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
+/* 卡片顶部渐变彩带装饰 */
 .card-container::before {
     content: "";
     position: absolute;
-    inset: 0 0 auto 0;
-    height: 120px;
-    background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px 16px 0 0;
+    z-index: 0;
 }
 
+/* 鼠标悬浮：卡片轻微上浮 */
 .card-container:hover {
     transform: translateY(-8px);
-    box-shadow: 0 24px 50px rgba(15, 23, 42, 0.16);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
 }
 
-.avatar-box,
+/* 头像外框 */
+.avatar-box {
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 圆形头像 + 渐变光环 */
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+/* 头像hover旋转放大 */
+.avatar:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* 头像外部紫色光环 */
+.avatar-box::after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 255, 255, 0.6);
+    animation: spin 12s linear infinite;
+    pointer-events: none;
+}
+
+/* 文字信息区域 */
 .info {
     position: relative;
     z-index: 1;
 }
 
-.avatar-box {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 18px;
-}
-
-.avatar {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 12px 20px rgba(124, 58, 237, 0.2);
-    background: #c4b5fd;
-}
-
-.info {
-    text-align: center;
-}
-
+/* 姓名样式 - 渐变文字 */
 .name {
-    font-size: 30px;
-    color: #111827;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 6px;
 }
 
+/* 职位文本 */
 .job {
-    display: inline-block;
-    padding: 8px 18px;
-    border-radius: 999px;
-    background: rgba(124, 58, 237, 0.1);
-    color: #6d28d9;
     font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 18px;
+    color: #8b8b9e;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
 }
 
+/* 联系方式区域 */
 .contact {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 12px;
+    border-top: 1px dashed #e0e0eb;
+    padding-top: 20px;
 }
 
 .contact p {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 12px;
-    border-radius: 12px;
-    background: #f3f4f6;
-    font-size: 15px;
-    color: #374151;
-    line-height: 1.5;
-    box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.12);
+    font-size: 14px;
+    color: #5a5a6e;
+    margin-bottom: 10px;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
+/* 联系方式hover微动 */
 .contact p:hover {
-    background: #eef2ff;
-    color: #312e81;
+    color: #667eea;
+    transform: translateX(4px);
+}
+
+/* ===== 动画关键帧 ===== */
+
+/* 入场淡入上滑 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 头像光环旋转 */
+@keyframes spin {
+    from { transform: translateX(-50%) rotate(0deg); }
+    to   { transform: translateX(-50%) rotate(360deg); }
 }
